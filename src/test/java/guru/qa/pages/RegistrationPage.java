@@ -20,9 +20,11 @@ public class RegistrationPage {
 
 
     //actions
-    public void openPage(){
+    public RegistrationPage openPage(){
         open("https://demoqa.com/automation-practice-form");
-        formTitle.shouldHave(text(FORM_TITLE));
+//        formTitle.shouldHave(text(FORM_TITLE));
+
+        return this;
     }
     public RegistrationPage typeFirstName(String value){
         firstNameInput.setValue(value);
