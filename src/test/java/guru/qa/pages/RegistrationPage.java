@@ -17,6 +17,13 @@ public class RegistrationPage {
             formTitle = $(".practice-form-wrapper"),
             firstNameInput = $("#firstName"),
             lastNameInput = $("#lastName").setValue("2LastName"),
+            userEmail = $("#userEmail"),
+            userNumber = $("#userNumber"),
+            subjectsInput = $("#subjectsInput"),
+            userUploadPicture = $("#uploadPicture"),
+            userCurrentAddress = $("#currentAddress"),
+            userState = $("#react-select-3-input"),
+            userCity = $("#react-select-4-input"),
             resultsTable = $(".table-responsive");
     public CalendarComponent calendarComponent = new CalendarComponent();
 
@@ -33,8 +40,45 @@ public class RegistrationPage {
 
         return this;
     }
-    public void typeLastName(String value){
+    public RegistrationPage typeLastName(String value){
         lastNameInput.setValue(value);
+
+        return this;
+    }
+    public RegistrationPage typeUserEmail(String value){
+        userEmail.setValue(value);
+
+        return this;
+    }
+    public RegistrationPage typeUserNumber(String value){
+        userNumber.setValue(value);
+
+        return this;
+    }
+    public RegistrationPage typeSubjects(String value){
+        subjectsInput.setValue(value).pressEnter();
+
+        return this;
+    }
+    public RegistrationPage typeUploadPicture(String value){
+        userUploadPicture.uploadFromClasspath(value);
+
+        return this;
+    }
+    public RegistrationPage typeUserAddress(String value){
+        userCurrentAddress.setValue(value);
+
+        return this;
+    }
+    public RegistrationPage typeUserState(String value){
+        userState.setValue(value).pressEnter();
+
+        return this;
+    }
+    public RegistrationPage typeUserCity(String value){
+        userCity.setValue(value).pressEnter();
+
+        return this;
     }
     public RegistrationPage checkResultsValue(String key, String value){
         resultsTable.$(byText(key)).parent().shouldHave(text(value));

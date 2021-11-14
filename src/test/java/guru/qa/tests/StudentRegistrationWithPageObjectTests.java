@@ -1,49 +1,60 @@
 package guru.qa.tests;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.conditions.Text;
-import com.codeborne.selenide.selector.ByText;
-import guru.qa.pages.RegistrationPage;
-import org.junit.jupiter.api.BeforeAll;
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestReporter;
-import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Condition.text;
+import java.util.Locale;
+
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class StudentRegistrationWithPageObjectTests extends TestBase {
 
+    Faker faker = new Faker(new Locale("en-IND"));
+
+    String firstName = faker.name().firstName();
+    String lastName = faker.name().lastName();
+    String fullName = firstName + " " + lastName;
+    String userEmail = faker.internet().emailAddress();
+    String userAddress = faker.address().streetAddress();
+    String userMobileNumber = "0123456789";
+
+
     @Test
     void fillFormTest() {
         registrationPage.openPage()
-                .typeFirstName("Artem")
-                .typeLastName("Gorchakov");
-        $("#userEmail").setValue("qwe@qas.ru");
+                .typeFirstName(firstName)
+                .typeLastName(lastName)
+                .typeUserEmail(userEmail)
+                .typeUserNumber(userMobileNumber);
+
         $$(".custom-radio").get(1).click();
-        $("#userNumber").setValue("1234567891");
+
 
         registrationPage.calendarComponent.setDate("12", "January", "2020");
-        $("#subjectsInput").setValue("Physics").pressEnter();
+
+        registrationPage.typeSubjects("Maths");
+
         $(byText("Music")).click();
         $(byText("Sports")).click();
-        $("#uploadPicture").uploadFromClasspath("facemy.jpg");
-        $("#currentAddress").setValue("SomeAddress");
-        $("#react-select-3-input").setValue("Uttar Pradesh").pressEnter();
-        $("#react-select-4-input").setValue("Agra").pressEnter();
+
+        registrationPage.typeUploadPicture("facemy.jpg");
+
+        registrationPage.typeUserAddress(userAddress)
+                .typeUserState("Uttar Pradesh")
+                .typeUserCity("Agra");
+
         $("#submit").click();
 
-        registrationPage.checkResultsValue("Student Name", "Artem Gorchakov")
-                .checkResultsValue("Student Email", "qwe@qas.ru")
+        registrationPage.checkResultsValue("Student Name", fullName)
+                .checkResultsValue("Student Email", userEmail)
                 .checkResultsValue("Gender", "Female")
-                .checkResultsValue("Mobile", "1234567891")
+                .checkResultsValue("Mobile", userMobileNumber)
                 .checkResultsValue("Date of Birth", "12 January,2020")
-                .checkResultsValue("Subjects", "Physics")
+                .checkResultsValue("Subjects", "Maths")
                 .checkResultsValue("Hobbies", "Music, Sports")
                 .checkResultsValue("Picture", "facemy.jpg")
-                .checkResultsValue("Address", "SomeAddress")
+                .checkResultsValue("Address", userAddress)
                 .checkResultsValue("State and City", "Uttar Pradesh Agra");
 
     }
