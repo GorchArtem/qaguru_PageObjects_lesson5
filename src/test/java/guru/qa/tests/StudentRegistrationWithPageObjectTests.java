@@ -19,8 +19,8 @@ public class StudentRegistrationWithPageObjectTests extends TestBase {
     @Test
     void fillFormTest() {
         registrationPage.openPage();
-        registrationPage.typeFirstName("Artem");
-        registrationPage.typeLastName("Gorchakov");
+        registrationPage.typeFirstName("Artem")
+                .typeLastName("Gorchakov");
         $("#userEmail").setValue("qwe@qas.ru");
         $$(".custom-radio").get(1).click();
         $("#userNumber").setValue("1234567891");
@@ -37,16 +37,16 @@ public class StudentRegistrationWithPageObjectTests extends TestBase {
         $("#react-select-4-input").setValue("Agra").pressEnter();
         $("#submit").click();
 
-        $(".table-responsive").shouldHave(text("1Name 2LastName"),
-                text("qwe@qas.ru"),
-                text("Female"),
-                text("1234567891"),
-                text("12 January,2020"),
-                text("Physics"),
-                text("Music, Sports"),
-                text("facemy.jpg"),
-                text("SomeAddress"),
-                text("Uttar Pradesh Agra"));
+        registrationPage.checkResultsValue("Student Name", "Artem Gorchakov")
+                .checkResultsValue("Student Email", "qwe@qas.ru")
+                .checkResultsValue("Gender", "Female")
+                .checkResultsValue("Mobile", "1234567891")
+                .checkResultsValue("Date of Birth", "12 January,2020")
+                .checkResultsValue("Subjects", "Physics")
+                .checkResultsValue("Hobbies", "Music, Sports")
+                .checkResultsValue("Picture", "facemy.jpg")
+                .checkResultsValue("Address", "SomeAddress")
+                .checkResultsValue("State and City", "Uttar Pradesh Agra");
 
     }
 }
