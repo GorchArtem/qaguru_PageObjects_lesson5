@@ -24,10 +24,8 @@ public class StudentRegistrationWithPageObjectTests extends TestBase {
         $("#userEmail").setValue("qwe@qas.ru");
         $$(".custom-radio").get(1).click();
         $("#userNumber").setValue("1234567891");
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__month-select").selectOption("January");
-        $(".react-datepicker__year-select").selectOption("2020");
-        $$(".react-datepicker__day").find(text("12")).click();
+
+        registrationPage.calendarComponent.setDate("12", "January", "2020");
         $("#subjectsInput").setValue("Physics").pressEnter();
         $(byText("Music")).click();
         $(byText("Sports")).click();
