@@ -19,8 +19,8 @@ public class StudentRegistrationWithPageObjectTests extends TestBase {
     @Test
     void fillFormTest() {
         registrationPage.openPage();
-        $("#firstName").setValue("1Name");
-        $("#lastName").setValue("2LastName");
+        registrationPage.typeFirstName("Artem");
+        registrationPage.typeLastName("Gorchakov");
         $("#userEmail").setValue("qwe@qas.ru");
         $$(".custom-radio").get(1).click();
         $("#userNumber").setValue("1234567891");
